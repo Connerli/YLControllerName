@@ -8,23 +8,12 @@
 
 #import "UIViewController+ClassName.h"
 #import <objc/runtime.h>
-#define kClassNameTag 3000
 
+#define kClassNameLabelTag 54321
 static BOOL displayClassName = NO;
 @implementation UIViewController (ClassName)
-
-+ (void)displayClassName:(BOOL)yesOrNo
-{
-    displayClassName = yesOrNo;
-    if (displayClassName) {
-        [self displayClassName];
-    } else {
-        [self removeClassName];
-    }
-}
-
+//交换viewDidApper 方法
 + (void)load {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
@@ -35,17 +24,10 @@ static BOOL displayClassName = NO;
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
         
-        // When swizzling a class method, use the following:
-        // Class class = object_getClass((id)self);
-        // ...
-        // Method originalMethod = class_getClassMethod(class, originalSelector);
-        // Method swizzledMethod = class_getClassMethod(class, swizzledSelector);
-        
         BOOL didAddMethod = class_addMethod(class,
                                             originalSelector,
                                             method_getImplementation(swizzledMethod),
                                             method_getTypeEncoding(swizzledMethod));
-        
         if (didAddMethod) {
             class_replaceMethod(class,
                                 swizzledSelector,
@@ -57,59 +39,75 @@ static BOOL displayClassName = NO;
     });
 }
 
-#pragma mark - Method Swizzling
++ (void)displayClassName:(BOOL)yesOrNo
+{
+    displayClassName = yesOrNo;
+    if (displayClassName) {
+        [self displayClassName];
+    } else {
+        [self removeClassName];
+    }
+}
 
+#pragma mark - Method Swizzling
 - (void)yl_viewDidAppear:(BOOL)animated
 {
     [self yl_viewDidAppear:animated];
-    
+
     if (displayClassName) {
         [[self class] displayClassName];
+        [self showClassName];
     }
 }
 
 + (void)displayClassName
 {
     UIWindow *window = [self appWindow];
-    
+
     UILabel *classNameLabel;
-    if ([window viewWithTag:kClassNameTag]) {
-        classNameLabel = (UILabel *)[window viewWithTag:kClassNameTag];
+    if ([window viewWithTag:kClassNameLabelTag]) {
+        classNameLabel = (UILabel *)[window viewWithTag:kClassNameLabelTag];
         [window bringSubviewToFront:classNameLabel];
     } else {
-        classNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, window.bounds.size.width, 20)];
+        classNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, window.bounds.size.width, 30)];
         classNameLabel.textColor = [UIColor redColor];
         classNameLabel.font = [UIFont systemFontOfSize:12];
-        classNameLabel.tag = kClassNameTag;
+        classNameLabel.tag = kClassNameLabelTag;
+        classNameLabel.numberOfLines = 2;
         [window addSubview:classNameLabel];
         [window bringSubviewToFront:classNameLabel];
     }
-    
-    const char *className = class_getName(self.class);
-    NSString *classNameStr = @(className);
-    
-    if ([self needDisplay:classNameStr]) {
-        [classNameLabel setText:classNameStr];
-        
+}
+
+- (void)showClassName {
+    if ([self needDisplay]) {
+        NSString *classNameStr = NSStringFromClass([self class]);
+        NSString *parentClassNameStr = NSStringFromClass([[self getTopParentVC] class]);
+        UIWindow *window = [UIViewController appWindow];
+        UILabel *classNameLabel = (UILabel *)[window viewWithTag:kClassNameLabelTag];
+        if ([classNameStr isEqualToString:parentClassNameStr]) {
+            [classNameLabel setText:classNameStr];
+        } else {
+            [classNameLabel setText:[NSString stringWithFormat:@"P_%@\nC_%@",parentClassNameStr,classNameStr]];
+        }
     }
 }
 
 + (void)removeClassName
 {
     UIWindow *window = [self appWindow];
-    
     UILabel *classNameLabel;
-    if ([window viewWithTag:kClassNameTag]) {
-        classNameLabel = (UILabel *)[window viewWithTag:kClassNameTag];
+    if ([window viewWithTag:kClassNameLabelTag]) {
+        classNameLabel = (UILabel *)[window viewWithTag:kClassNameLabelTag];
         [classNameLabel removeFromSuperview];
     }
 }
 
-+ (BOOL)needDisplay:(NSString *)className
+- (BOOL)needDisplay
 {
-    if ([className isEqualToString:@"UIInputWindowController"]) {
+    if ([self isKindOfClass:[UIInputViewController class]]) {
         return NO;
-    } else if ([className isEqualToString:@"UINavigationController"]) {
+    } else if ([self isKindOfClass:[UINavigationController class]]) {
         return NO;
     } else {
         return YES;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130C3FAB21B90544008A83DE /* YLChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 130C3FAA21B90544008A83DE /* YLChildViewController.m */; };
 		137E103D21B7C66800FBDE9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E103C21B7C66800FBDE9C /* AppDelegate.m */; };
 		137E104021B7C66800FBDE9C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E103F21B7C66800FBDE9C /* ViewController.m */; };
 		137E104321B7C66800FBDE9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 137E104121B7C66800FBDE9C /* Main.storyboard */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		130C3FA921B90544008A83DE /* YLChildViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLChildViewController.h; sourceTree = "<group>"; };
+		130C3FAA21B90544008A83DE /* YLChildViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLChildViewController.m; sourceTree = "<group>"; };
 		137E103821B7C66800FBDE9C /* YLControllerName.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YLControllerName.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137E103B21B7C66800FBDE9C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137E103C21B7C66800FBDE9C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -66,6 +69,8 @@
 				137E103C21B7C66800FBDE9C /* AppDelegate.m */,
 				137E103E21B7C66800FBDE9C /* ViewController.h */,
 				137E103F21B7C66800FBDE9C /* ViewController.m */,
+				130C3FA921B90544008A83DE /* YLChildViewController.h */,
+				130C3FAA21B90544008A83DE /* YLChildViewController.m */,
 				137E104121B7C66800FBDE9C /* Main.storyboard */,
 				137E104421B7C66900FBDE9C /* Assets.xcassets */,
 				137E104621B7C66900FBDE9C /* LaunchScreen.storyboard */,
@@ -110,6 +115,7 @@
 		137E103021B7C66800FBDE9C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = YL;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Conner;
 				TargetAttributes = {
@@ -156,6 +162,7 @@
 			files = (
 				137E104021B7C66800FBDE9C /* ViewController.m in Sources */,
 				137E104B21B7C66900FBDE9C /* main.m in Sources */,
+				130C3FAB21B90544008A83DE /* YLChildViewController.m in Sources */,
 				137E105421B7C69500FBDE9C /* UIViewController+ClassName.m in Sources */,
 				137E103D21B7C66800FBDE9C /* AppDelegate.m in Sources */,
 			);
@@ -302,6 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 49ENPVW3M9;
 				INFOPLIST_FILE = YLControllerName/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -319,6 +327,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 49ENPVW3M9;
 				INFOPLIST_FILE = YLControllerName/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
