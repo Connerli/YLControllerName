@@ -11,7 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (ClassName)
-+ (void)displayClassName:(BOOL)yesOrNo;
+/**
+ 显示类名
+ 
+ @param display 是否显示 default NO
+ @param color 显示文字颜色 default RedColor
+ */
++ (void)displayClassName:(BOOL)display textColor:(nullable UIColor *)color;
 @end
 
 NS_ASSUME_NONNULL_END

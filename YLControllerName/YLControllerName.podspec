@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YLControllerName"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "显示当前控制器的类名"
 
   # This description is used to generate tags and improve search results.

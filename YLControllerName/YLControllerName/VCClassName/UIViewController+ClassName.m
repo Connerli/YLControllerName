@@ -9,8 +9,9 @@
 #import "UIViewController+ClassName.h"
 #import <objc/runtime.h>
 
-#define kClassNameLabelTag 54321
-static BOOL displayClassName = NO;
+#define kClassNameLabelTag 53412
+static BOOL isDisplayName = NO;
+static UIColor *textColor;
 @implementation UIViewController (ClassName)
 //交换viewDidApper 方法
 + (void)load {
@@ -39,10 +40,10 @@ static BOOL displayClassName = NO;
     });
 }
 
-+ (void)displayClassName:(BOOL)yesOrNo
-{
-    displayClassName = yesOrNo;
-    if (displayClassName) {
++ (void)displayClassName:(BOOL)display textColor:(UIColor *)color {
+    isDisplayName = display;
+    textColor = color;
+    if (isDisplayName) {
         [self displayClassName];
     } else {
         [self removeClassName];
@@ -54,7 +55,7 @@ static BOOL displayClassName = NO;
 {
     [self yl_viewDidAppear:animated];
 
-    if (displayClassName) {
+    if (isDisplayName) {
         [[self class] displayClassName];
         [self showClassName];
     }
@@ -70,7 +71,11 @@ static BOOL displayClassName = NO;
         [window bringSubviewToFront:classNameLabel];
     } else {
         classNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, window.bounds.size.width, 30)];
-        classNameLabel.textColor = [UIColor redColor];
+        if (textColor) {
+            classNameLabel.textColor = textColor;
+        } else {
+            classNameLabel.textColor = [UIColor redColor];
+        }
         classNameLabel.font = [UIFont systemFontOfSize:12];
         classNameLabel.tag = kClassNameLabelTag;
         classNameLabel.numberOfLines = 2;
@@ -93,8 +98,7 @@ static BOOL displayClassName = NO;
     }
 }
 
-+ (void)removeClassName
-{
++ (void)removeClassName {
     UIWindow *window = [self appWindow];
     UILabel *classNameLabel;
     if ([window viewWithTag:kClassNameLabelTag]) {
@@ -103,19 +107,15 @@ static BOOL displayClassName = NO;
     }
 }
 
-- (BOOL)needDisplay
-{
-    if ([self isKindOfClass:[UIInputViewController class]]) {
-        return NO;
-    } else if ([self isKindOfClass:[UINavigationController class]]) {
+- (BOOL)needDisplay {
+    if ([self isKindOfClass:[UIInputViewController class]] || [self isKindOfClass:[UINavigationController class]] || [self isKindOfClass:[UITabBarController class]]) {
         return NO;
     } else {
         return YES;
     }
 }
 
-+ (UIWindow *)appWindow
-{
++ (UIWindow *)appWindow {
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     return [appDelegate window];
 }

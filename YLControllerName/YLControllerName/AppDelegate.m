@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [UIViewController displayClassName:YES];
+    [UIViewController displayClassName:YES textColor:nil];
     return YES;
 }
 
