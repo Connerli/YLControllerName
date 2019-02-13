@@ -7,5 +7,5 @@
 pod setup成功后会生成~/Library/Caches/CocoaPods/search_index.json文件。   
 终端输入rm ~/Library/Caches/CocoaPods/search_index.json  
 删除成功后再执行pod search  
-
+```pod 'YLControllerName', :configuration => 'Debug'```
 2. 直接拖到项目里面
