@@ -10,5 +10,5 @@
 删除成功后再执行  
 `pod search YLControllerName`  
 podfile 文件填写  
-`pod 'YLControllerName', :configuration => 'Debug'`  
+`pod 'YLControllerName', :configuration => ['Debug']`  
 2. 直接拖到项目里面
